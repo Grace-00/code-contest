@@ -11,8 +11,8 @@ class App extends Component {
     userId: '',
     user: '',
     userStatus: 'offline',
-    username: 'demo',
-    password: 'demo',
+    username: 'team3',
+    password: 'cambiala',
     showPassword: false,
     listUsers: [],
     activeUser: {},
@@ -27,6 +27,11 @@ class App extends Component {
           user.username.includes(this.state.searchValue)
         )
       : this.state.listUsers;
+  }
+
+ handleSearchUser = (e) => {
+    console.log(e.target.value)
+    this.value = e.target.value
   }
 
   checkChat = () => {
@@ -278,7 +283,7 @@ class App extends Component {
                 <span className={`userStatus ${this.state.userStatus}`} />
               </div>
               <div className="searchBoxContainer">
-                {/* TODO Insert here the search box */}
+                <SearchBox placeholder="ciao" value={this.searchValue} onChange={this.handleSearchUser} onSubmit={(e)=>e.preventDefault()}/>
               </div>
               <div className="orderBy">
                 <form>
