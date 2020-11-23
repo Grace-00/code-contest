@@ -29,11 +29,6 @@ class App extends Component {
       : this.state.listUsers;
   }
 
- handleSearchUser = (e) => {
-    console.log(e.target.value)
-    state.searchValue = e.target.value
-  }
-
   checkChat = () => {
     setInterval(() => {
       if (this.state.activeUser.username) {
@@ -283,7 +278,14 @@ class App extends Component {
                 <span className={`userStatus ${this.state.userStatus}`} />
               </div>
               <div className="searchBoxContainer">
-                <SearchBox placeholder="ciao" value={this.searchValue} onChange={this.handleSearchUser} onSubmit={(e)=>e.preventDefault()}/>
+              <SearchBox
+                placeholder="Search User"
+                onChange={e => this.setState({ searchValue: e.target.value })}
+                value={this.state.searchValue}
+                onSubmit={e => {
+                e.preventDefault();
+                }}
+                />
               </div>
               <div className="orderBy">
                 <form>
@@ -294,8 +296,9 @@ class App extends Component {
                 {this.searchUser
                   .filter(user => user.username !== this.state.user)
                   .map((user, i) => {
-                    {/* TODO Insert here the chat preview */}
-                    return null;
+                    console.log(user)
+
+                    return <ChatPreview key={user._id} title= {user.username} status={user.status} lastMessage={user.statusText} active ={user.active} infoPreview={user.infoPreview} />;
                   })}
               </div>
             </div>
