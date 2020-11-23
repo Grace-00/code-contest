@@ -289,7 +289,11 @@ class App extends Component {
               </div>
               <div className="orderBy">
                 <form>
-                  {/* TODO Insert here the order by select */}
+                  <select onChange={this.onSelectOrderBy} value={this.state.orderByValue}>
+                    <option value="nameASC">Ordine ascendente</option>
+                    <option value="nameDESC">Ordine discendente</option>
+                    <option value="status">Status</option>
+                  </select>
                 </form>
               </div>
               <div className="chatList">
@@ -298,7 +302,33 @@ class App extends Component {
                   .map((user, i) => {
                     console.log(user)
 
-                    return <ChatPreview key={user._id} title= {user.username} status={user.status} lastMessage={user.statusText} active ={user.active} infoPreview={user.infoPreview} />;
+                    return <ChatPreview
+                    key={i}
+                    title={user.username}
+                    lastMessage={{
+                      message:
+                        this.state.rooms[user.username] &&
+                          this.state.rooms[user.username].lastMessage
+                          ? this.state.rooms[user.username].lastMessage.msg
+                          : '',
+                      time:
+                        this.state.rooms[user.username] &&
+                          this.state.rooms[user.username].lastMessage
+                          ? this.state.rooms[user.username].lastMessage.ts
+                          : ''
+                    }}
+                    status={user.status}
+                    active={
+                      this.state.activeUser.username === user.username
+                    }
+                    onClick={() => {
+                      this.createDirectMessageChat(user.username);
+                      this.setState({
+                        activeUser: user,
+                        messageValue: ''
+                      });
+                    }}
+                  />;
                   })}
               </div>
             </div>
