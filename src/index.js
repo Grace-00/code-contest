@@ -31,7 +31,7 @@ class App extends Component {
 
  handleSearchUser = (e) => {
     console.log(e.target.value)
-    this.value = e.target.value
+    state.searchValue = e.target.value
   }
 
   checkChat = () => {
