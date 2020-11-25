@@ -347,8 +347,13 @@ class App extends Component {
               <div className="messageList">
                 {this.state.rooms[this.state.activeUser.username] &&
                   this.state.rooms[this.state.activeUser.username].messages.map(
-                    message => { return <Message key={message._id} message={message.msg} dateMessage={message.ts} received={message.u._id === this.state.userId ? false: true}  />}
-                  )}
+                    message =>
+                    (<Message
+                      key={message._id}
+                      message={message.msg}
+                      dateMessage={message.ts}
+                    received={message.u._id !== this.state.userId }  />)
+                  ).reverse()}
               </div>
 
 
