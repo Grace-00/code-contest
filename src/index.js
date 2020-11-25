@@ -347,10 +347,7 @@ class App extends Component {
               <div className="messageList">
                 {this.state.rooms[this.state.activeUser.username] &&
                   this.state.rooms[this.state.activeUser.username].messages.map(
-                    message => {
-                      {/* TODO Insert here the messages */}
-                      return null;
-                    }
+                    message => { return <Message key={message._id} message={message.msg} dateMessage={message.ts} received={message.u._id === this.state.userId ? false: true}  />}
                   )}
               </div>
 
@@ -358,11 +355,12 @@ class App extends Component {
               {this.state.activeUser.username && (
                 <div className="sendBoxContainer">
                   <SendBox
-                  placeholder="Message"
-                  value={this.state.messageValue}
-                  onChange={e => this.setState({ messageValue: e.target.value})}
-                  onSubmit={(e) =>
-                    this.callApiPostMessage(e)}  />
+                    placeholder="Insert Message"
+                    onChange={e =>
+                      this.setState({ messageValue: e.target.value })
+                    }
+                    value={this.state.messageValue}
+                    onSubmit={this.callApiPostMessage}  />
                 </div>
 
 
