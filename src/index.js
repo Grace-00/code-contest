@@ -109,6 +109,7 @@ class App extends Component {
     this.setState({
       messageValue: ''
     });
+
     Api.sendMessage({
       userId,
       message,
@@ -289,7 +290,7 @@ class App extends Component {
               </div>
               <div className="orderBy">
                 <form>
-                  <select onChange={this.onSelectOrderBy} value={this.state.orderByValue}>
+                  <select onChange={e => this.onSelectOrderBy(e.target.value)} value={this.state.orderByValue}>
                     <option value="nameASC">Ordine ascendente</option>
                     <option value="nameDESC">Ordine discendente</option>
                     <option value="status">Status</option>
@@ -300,7 +301,7 @@ class App extends Component {
                 {this.searchUser
                   .filter(user => user.username !== this.state.user)
                   .map((user, i) => {
-                    console.log(user)
+                    // console.log(user)
 
                     return <ChatPreview
                     key={i}
@@ -352,10 +353,19 @@ class App extends Component {
                     }
                   )}
               </div>
+
+
               {this.state.activeUser.username && (
                 <div className="sendBoxContainer">
-                  {/* TODO Insert here the sendbox */}
+                  <SendBox
+                  placeholder="Message"
+                  value={this.state.messageValue}
+                  onChange={e => this.setState({ messageValue: e.target.value})}
+                  onSubmit={(e) =>
+                    this.callApiPostMessage(e)}  />
                 </div>
+
+
               )}
             </div>
           </div>

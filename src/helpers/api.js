@@ -6,7 +6,7 @@ function parse(res) {
 
 /**
  * auth decorator ^_^
- * 
+ *
  * @param {*} fn - the real function
  * @param {*} ctx - the this, context
  * @returns {Function}
@@ -16,7 +16,7 @@ function auth(fn, ctx) {
     if (this.authToken === '') {
       return Promise.resolve({ error: true, status: 401, message: 'Unauthorized' });
     }
-    return fn.apply(this, arguments); 
+    return fn.apply(this, arguments);
   }.bind(ctx);
 }
 
@@ -67,7 +67,7 @@ export class Api {
       })
         .then(parse);
   }
-  
+
   /**
    *
    *
@@ -75,7 +75,7 @@ export class Api {
    * @returns
    * @memberof Api
    */
-  
+
   fetchUserInfo({ userId }) {
     return fetch(`${config.apiUri}api/v1/me`, {
       method: 'GET',
@@ -114,9 +114,23 @@ export class Api {
    */
   sendMessage({ userId, activeRoom, message }) {
     {/* TODO Implement post message api */}
-    return Promise.reject('Bisogna implementare la chiamata alle API')
+    return fetch(`${config.apiUri}api/v1/chat.postMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': this.authToken,
+        'X-User-Id': userId
+      },
+      body: JSON.stringify({
+        "channel": activeRoom,
+        "message": message
+        })
+      }
+    )
+      .then(parse);
+    // {return Promise.reject('Bisogna implementare la chiamata alle API')}
   }
-  
+
   /**
    *
    *
